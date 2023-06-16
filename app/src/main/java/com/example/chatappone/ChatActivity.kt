@@ -18,7 +18,7 @@ class ChatActivity : AppCompatActivity() {
 // val
         val name = intent.getStringExtra("name")
         val userId = intent.getStringExtra("id")
-
+ val username = name
         // helps to use our own action bar that is toolbar
         setSupportActionBar(chatBinding.toolBarChatActivity)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
