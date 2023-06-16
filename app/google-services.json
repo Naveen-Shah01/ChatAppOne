@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "722312502463",
+    "project_id": "chatappone-799e1",
+    "storage_bucket": "chatappone-799e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722312502463:android:ddd9cf8c2170aecce4fa0a",
+        "android_client_info": {
+          "package_name": "com.example.chatappone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722312502463-5l9b7485ri89fl950ldvh6au295bb3rs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIHjUxNeWp_T7onBJRxzBWuRH4av_yL5U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722312502463-5l9b7485ri89fl950ldvh6au295bb3rs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
