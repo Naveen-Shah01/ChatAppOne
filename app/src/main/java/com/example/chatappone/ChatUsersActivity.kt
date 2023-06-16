@@ -1,5 +1,6 @@
 package com.example.chatappone
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -27,6 +28,7 @@ class ChatUsersActivity : AppCompatActivity() {
     private val usersList = ArrayList<UsersEntity>()
     lateinit var usersAdapter: UsersAdapter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         chatUsersBinding = ActivityChatUsersBinding.inflate(layoutInflater)
@@ -37,9 +39,14 @@ class ChatUsersActivity : AppCompatActivity() {
         retrieveDataFromFirebaseDatabase()
         setUpRecyclerView()
         chatUsersBinding.iBtnLogout.setOnClickListener {
-    //TODO Finish all previous activities when logout
+            //TODO Finish all previous activities when logout
             showAlertDialogLogOut()
 
+        }
+
+        chatUsersBinding.iBtnProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
     }
 

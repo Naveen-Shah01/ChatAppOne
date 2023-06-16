@@ -17,6 +17,7 @@ class UsersAdapter(
     inner class ViewHolder(val adapterBinding: UserItemBinding) :
         RecyclerView.ViewHolder(adapterBinding.root) {
         val tvName = adapterBinding.tvName
+        val tvDescription = adapterBinding.tvDescription
     }
 
 
