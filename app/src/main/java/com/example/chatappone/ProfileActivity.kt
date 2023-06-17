@@ -1,12 +1,15 @@
 package com.example.chatappone
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,14 +17,26 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.chatappone.databinding.ActivityChatUsersBinding
 import com.example.chatappone.databinding.ActivityProfileBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import java.util.UUID
 
 class ProfileActivity : AppCompatActivity() {
 
     lateinit var galleryActivityResultLauncher: ActivityResultLauncher<Intent>
     //TODO edit name,profile in this activity
     private lateinit var profileBinding: ActivityProfileBinding
+
     private var imageUri: Uri? = null
+    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
+    private val myReference: DatabaseReference = database.reference.child("Users")
+    private val fireBaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    private val storageReference: StorageReference = fireBaseStorage.reference
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileBinding = ActivityProfileBinding.inflate(layoutInflater)
@@ -36,9 +51,42 @@ class ProfileActivity : AppCompatActivity() {
             //TODO ask gallery permission
             chooseImageFromGallery()
         }
+        profileBinding.btUpdate.setOnClickListener {
+            val userNameProfile = profileBinding.etProfileUserName.text.toString()
+            if(imageUri!=null ){
+                uploadImage()
+            }
+        }
 
     }
+    private fun uploadImage() {
+        profileBinding.btUpdate.isClickable = false
+        profileBinding.pbPrgressBarProfile.visibility = View.VISIBLE
 
+        //UUID
+        val imageName = intent.getStringExtra("imageName").toString()
+
+        val imageReference = storageReference.child("Profile").child(imageName)
+        imageUri?.let { uri ->
+            imageReference.putFile(uri).addOnSuccessListener {
+
+                Toast.makeText(applicationContext, "Image Updated", Toast.LENGTH_SHORT).show()
+
+                //downloadable url
+                val myUploadedImageReference = storageReference.child("images").child(imageName)
+                myUploadedImageReference.downloadUrl.addOnSuccessListener { url ->
+                    val imageUrl = url.toString()
+
+                    //updateData(imageUrl,imageName)
+
+                }
+            }
+
+        }?.addOnFailureListener {
+            Toast.makeText(applicationContext, it.localizedMessage, Toast.LENGTH_SHORT).show()
+        }
+
+    }
     private fun chooseImageFromGallery() {
 
         // TODO handle the event when user denies the permission
