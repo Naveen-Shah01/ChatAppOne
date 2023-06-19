@@ -16,20 +16,21 @@
     app:cardUseCompatPadding="true">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="4dp">
+        android:padding="8dp">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_place_image"
+            android:id="@+id/ivPlaceUserImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:contentDescription="Profile Image of User"
             android:padding="2dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher_round"
+            android:src="@drawable/avatar"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
             app:strokeColor="@color/color_primary"
             app:strokeWidth="2dp" />

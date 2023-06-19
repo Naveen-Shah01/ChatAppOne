@@ -11,7 +11,7 @@
         android:id="@+id/toolBarSignUpActivity"
         android:layout_width="match_parent"
         android:layout_height="?android:actionBarSize"
-        android:background="@color/black"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:theme="@style/ToolbarTheme" />
 

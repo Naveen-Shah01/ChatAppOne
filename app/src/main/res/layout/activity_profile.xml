@@ -7,17 +7,45 @@
     android:background="@color/white"
     tools:context=".ProfileActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBarProfileActivity"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
+        android:layout_height="?android:actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="My Profile"
+        style="@style/ToolbarTheme"
         app:titleCentered="true"
-        app:titleTextColor="@color/black" />
+        app:titleTextColor="@color/black"
+        app:theme="@style/ToolbarTheme">
+        <TextView
+            android:id="@+id/tvFriendNameChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/google_sans_bold"
+            android:gravity="center"
+            android:text="My Profile"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="normal|bold" />
+        <ImageButton
+            android:id="@+id/iBtnLogoutProfile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center|end"
+            android:layout_marginEnd="12dp"
+            android:background="@null"
+            android:contentDescription="Sign out"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/logout_icon" />
+
+    </androidx.appcompat.widget.Toolbar>
+
 
     <View
         android:id="@+id/vSeparator"
@@ -33,11 +61,11 @@
         android:id="@+id/cdProfileView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-       app:cardElevation="5dp"
-        app:cardCornerRadius="8dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +75,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:padding="15dp"
             android:layout_margin="5dp"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp">
 
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -92,29 +120,28 @@
 
             <EditText
                 android:id="@+id/etProfileUserName"
-                android:hint="Username"
-                android:inputType="textPersonName"
-                android:ems="1"
-                android:textSize="22sp"
-                android:textStyle="bold|normal"
-                android:textColor="@color/black"
-                android:background="@drawable/profile_et_background"
-                android:padding="10dp"
-                android:fontFamily="@font/google_sans_regular"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:background="@drawable/profile_et_background"
+                android:ems="1"
+                android:fontFamily="@font/google_sans_regular"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold|normal" />
+
             <LinearLayout
                 android:id="@+id/btUpdate"
-                android:layout_width="340dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/fab_btn_corner"
                 android:clickable="true"
                 android:clipToPadding="false"
-                android:focusable="true"
-              >
+                android:focusable="true">
 
                 <TextView
                     android:id="@+id/tvUpdate"
@@ -129,5 +156,29 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:id="@+id/btDeleteProfile"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/fab_btn_corner4"
+        android:clickable="true"
+        android:clipToPadding="false"
+        android:focusable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cdProfileView">
 
+    <TextView
+        android:id="@+id/tvDeleteProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/google_sans_bold"
+        android:gravity="center"
+        android:padding="14dp"
+        android:text="DELETE ACCOUNT"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

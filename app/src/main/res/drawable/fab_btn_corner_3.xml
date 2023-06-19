@@ -3,8 +3,8 @@
     android:color="#7387E1">
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
-            <solid android:color="@color/white" />
-            <corners android:radius="12dp" />
+            <solid android:color="@color/color_primary" />
+            <corners android:radius="30dp" />
         </shape>
     </item>
 </ripple>

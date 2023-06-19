@@ -1,6 +1,5 @@
 package com.example.chatappone
 
-import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -18,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class ChatUsersActivity : AppCompatActivity() {
     private lateinit var chatUsersBinding: ActivityChatUsersBinding
@@ -44,13 +44,38 @@ class ChatUsersActivity : AppCompatActivity() {
 
         }
 
-        chatUsersBinding.iBtnProfile.setOnClickListener {
+        chatUsersBinding.iBtnUserChatUsers.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
+
+//            intent.putExtra("imageUrl",allUsers.url)
+//            intent.putExtra("imageName",allUsers.imageName)
             startActivity(intent)
         }
+
+
+    }
+
+    private fun retrieveUserProfileImage() {
+        myReference.child(auth.currentUser!!.uid).addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(UsersEntity::class.java)
+                if(user!=null) {
+                    if (user.profileImageUrl != ""){
+                        Picasso.get().load(user.profileImageUrl).into(chatUsersBinding.iBtnUserChatUsers)
+                    }
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText( applicationContext, error.message, Toast.LENGTH_SHORT,).show()
+            }
+
+        })
     }
 
     private fun retrieveDataFromFirebaseDatabase() {
+        //retrieveUserProfileImage()
         myReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 usersList.clear()
@@ -60,6 +85,11 @@ class ChatUsersActivity : AppCompatActivity() {
                     if (user != null) {
                         if (auth.currentUser?.uid != user.userId)
                             usersList.add(user)
+                        else {
+                            if (user.profileImageUrl != ""){
+                                Picasso.get().load(user.profileImageUrl).into(chatUsersBinding.iBtnUserChatUsers)
+                            }
+                        }
                     }
 
                 }
@@ -67,7 +97,7 @@ class ChatUsersActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Cannot Display", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, error.message, Toast.LENGTH_LONG).show()
             }
         })
         // setUpRecyclerView()
@@ -79,6 +109,7 @@ class ChatUsersActivity : AppCompatActivity() {
         chatUsersBinding.rvRecyclerView.adapter = usersAdapter
     }
 
+    /** alert Dialog for logout */
     private fun showAlertDialogLogOut() {
         val logOutDialog = AlertDialog.Builder(this)
         logOutDialog.setTitle("Logout")
@@ -99,6 +130,8 @@ class ChatUsersActivity : AppCompatActivity() {
         logOutDialog.create().show()
     }
 
+
+    /** when logout it will move to login activity */
     private fun startLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)

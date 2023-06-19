@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class ChatActivity : AppCompatActivity() {
     private lateinit var chatBinding: ActivityChatBinding
@@ -36,24 +37,21 @@ class ChatActivity : AppCompatActivity() {
 // val
         val name = intent.getStringExtra("name")
         val receiverUserId = intent.getStringExtra("id")
+        val profileImageUrl = intent.getStringExtra("profileImageUrl")
         val senderUserId = FirebaseAuth.getInstance().currentUser?.uid
 
         senderRoom = receiverUserId + senderUserId
         receiverRoom = senderUserId + receiverUserId
-        // helps to use our own action bar that is toolbar
-        setSupportActionBar(chatBinding.toolBarChatActivity)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = name
 
-        // this will lead us to the main screen as exercise activity is already finished
-        chatBinding.toolBarChatActivity.setNavigationOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+       toolbarSetup()
+
+        setFriendImage(profileImageUrl , name)
+
 
         setUpRecyclerView()
 
         // adding the message to database
-        chatBinding.iBtnSendMessage.setOnClickListener {
+        chatBinding.btSendMessage.setOnClickListener {
             val message = chatBinding.etMessageBox.text.toString()
             if (message.isNotEmpty()) {
                 val messageObject = MessagesEntity(message, senderUserId)
@@ -67,6 +65,26 @@ class ChatActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun toolbarSetup() {
+        // helps to use our own action bar that is toolbar
+        setSupportActionBar(chatBinding.toolBarChatActivity)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        // this will lead us to the main screen as exercise activity is already finished
+        chatBinding.toolBarChatActivity.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun setFriendImage(profileImageUrl: String?, name : String?) {
+        chatBinding.tvFriendNameChat.text=name
+        if(profileImageUrl!=""){
+            Picasso.get().load(profileImageUrl).into(chatBinding.ivFriendImageChat)
+        }
+    }
+
 
     private fun setUpRecyclerView() {
         chatBinding.rvChatRecyclerView.layoutManager = LinearLayoutManager(this@ChatActivity)

@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        android:background="@drawable/fab_btn_corner_2"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp">
+        <com.google.android.material.imageview.ShapeableImageView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/ivFriendImageChat"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="Profile Image of Friend"
+            android:padding="2dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/avatar"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeColor="@color/black"
+            android:layout_alignParentEnd="true"
+            app:strokeWidth="1dp" />
         <TextView
             android:id="@+id/tvReceivedMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This is Receivers message"
+            android:background="@drawable/fab_btn_corner_2"
             android:textColor="@color/black"
             android:textSize="18sp"
-            android:padding="10dp"/>
-    </RelativeLayout>
+            android:maxWidth="260dp"
+            app:layout_constraintStart_toEndOf="@id/ivFriendImageChat"
+            app:layout_constraintTop_toTopOf="@id/ivFriendImageChat"
+            android:layout_marginStart="8dp"
+            android:padding="12dp"/>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
