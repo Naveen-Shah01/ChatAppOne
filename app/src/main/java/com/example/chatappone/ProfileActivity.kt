@@ -70,7 +70,6 @@ class ProfileActivity : AppCompatActivity() {
         }
         profileBinding.btUpdate.setOnClickListener {
             val userNameProfile = profileBinding.etProfileUserName.text.toString()
-
             updateData(userNameProfile)
         }
 
