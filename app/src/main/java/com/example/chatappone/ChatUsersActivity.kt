@@ -3,6 +3,7 @@ package com.example.chatappone
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,12 @@ import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 
 class ChatUsersActivity : AppCompatActivity() {
+
+    //TODO Image Changes from profile activity are not reflecting
+
+    //TODO add a loader of refresh button to load the profile changes that have been done in profile activity
+
+    //TODO create a latest message feature
     private lateinit var chatUsersBinding: ActivityChatUsersBinding
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -27,6 +34,8 @@ class ChatUsersActivity : AppCompatActivity() {
 
     private val usersList = ArrayList<UsersEntity>()
     lateinit var usersAdapter: UsersAdapter
+    private var userProfileImageUrl: String = ""
+    private var imageName = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +46,7 @@ class ChatUsersActivity : AppCompatActivity() {
 
         toolBarSetUp()
         retrieveDataFromFirebaseDatabase()
-        setUpRecyclerView()
+
         chatUsersBinding.iBtnLogout.setOnClickListener {
             //TODO Finish all previous activities when logout
             showAlertDialogLogOut()
@@ -56,22 +65,25 @@ class ChatUsersActivity : AppCompatActivity() {
     }
 
     private fun retrieveUserProfileImage() {
-        myReference.child(auth.currentUser!!.uid).addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(UsersEntity::class.java)
-                if(user!=null) {
-                    if (user.profileImageUrl != ""){
-                        Picasso.get().load(user.profileImageUrl).into(chatUsersBinding.iBtnUserChatUsers)
+        myReference.child(auth.currentUser!!.uid)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(UsersEntity::class.java)
+                    if (user != null) {
+                        if (user.profileImageUrl != "") {
+
+                            Picasso.get().load(user.profileImageUrl)
+                                .into(chatUsersBinding.iBtnUserChatUsers)
+                        }
                     }
+
                 }
 
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
+                }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText( applicationContext, error.message, Toast.LENGTH_SHORT,).show()
-            }
-
-        })
+            })
     }
 
     private fun retrieveDataFromFirebaseDatabase() {
@@ -86,13 +98,19 @@ class ChatUsersActivity : AppCompatActivity() {
                         if (auth.currentUser?.uid != user.userId)
                             usersList.add(user)
                         else {
-                            if (user.profileImageUrl != ""){
-                                Picasso.get().load(user.profileImageUrl).into(chatUsersBinding.iBtnUserChatUsers)
+                            userProfileImageUrl = user.profileImageUrl
+                            imageName = user.imageName
+                            if (user.profileImageUrl != "") {
+
+                                Picasso.get().load(user.profileImageUrl)
+                                    .into(chatUsersBinding.iBtnUserChatUsers)
                             }
                         }
                     }
 
                 }
+                setUpRecyclerView()
+
                 usersAdapter.notifyDataSetChanged()
             }
 
@@ -104,8 +122,9 @@ class ChatUsersActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
+        Log.d("error", "Link : $userProfileImageUrl")
         chatUsersBinding.rvRecyclerView.layoutManager = LinearLayoutManager(this@ChatUsersActivity)
-        usersAdapter = UsersAdapter(this@ChatUsersActivity, usersList)
+        usersAdapter = UsersAdapter(this@ChatUsersActivity, usersList, userProfileImageUrl)
         chatUsersBinding.rvRecyclerView.adapter = usersAdapter
     }
 
@@ -133,9 +152,12 @@ class ChatUsersActivity : AppCompatActivity() {
 
     /** when logout it will move to login activity */
     private fun startLoginActivity() {
+        // TODO direct goto start activity and destroy all previous one
+
         val intent = Intent(this, LoginActivity::class.java)
+    // set the new task and clear flags
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-        finish()
     }
 
     private fun toolBarSetUp() {

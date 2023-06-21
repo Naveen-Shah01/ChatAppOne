@@ -5,15 +5,16 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.chatappone.authentication.LoginActivity
@@ -45,6 +46,7 @@ class ProfileActivity : AppCompatActivity() {
     private val storageReference: StorageReference = fireBaseStorage.reference
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private lateinit var currentUser: FirebaseUser
+    private var imageName = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         profileBinding = ActivityProfileBinding.inflate(layoutInflater)
@@ -67,14 +69,14 @@ class ProfileActivity : AppCompatActivity() {
             showAlertDialogLogOut()
         }
         profileBinding.btUpdate.setOnClickListener {
-//            val userNameProfile = profileBinding.etProfileUserName.text.toString()
-//
-//                updateData(userNameProfile)
-            }
+            val userNameProfile = profileBinding.etProfileUserName.text.toString()
 
-profileBinding.btDeleteProfile.setOnClickListener {
-    // TODO delete user account
-}
+            updateData(userNameProfile)
+        }
+
+        profileBinding.btDeleteProfile.setOnClickListener {
+            // TODO delete user account
+        }
     }
 
     private fun showAlertDialogLogOut() {
@@ -114,6 +116,8 @@ profileBinding.btDeleteProfile.setOnClickListener {
                 val user = snapshot.getValue(UsersEntity::class.java)
                 if (user != null) {
                     profileBinding.etProfileUserName.setText(user.userName)
+                    imageName = user.imageName
+                    Log.d("error", "imageName : $imageName")
 
                     if (user.profileImageUrl != "") {
                         Picasso.get().load(user.profileImageUrl)
@@ -132,41 +136,47 @@ profileBinding.btDeleteProfile.setOnClickListener {
 
     private fun updateData(userNameProfile: String) {
         // if image and name is empty or name is empty
-        if(imageUri==null&&userNameProfile.isEmpty()||userNameProfile.isEmpty()){
+        if (imageUri == null && userNameProfile.isEmpty() || userNameProfile.isEmpty()) {
             return
         }
-        if(userNameProfile.isNotEmpty()&&imageUri==null){
+        if (userNameProfile.isNotEmpty() && imageUri == null) {
             // TODO update user Name
         }
-        if(imageUri!=null && userNameProfile.isNotEmpty()){
+        if (imageUri != null && userNameProfile.isNotEmpty()) {
             // TODO update username and image
-        }
-//        profileBinding.btUpdate.isClickable = false
-//        profileBinding.pbPrgressBarProfile.visibility = View.VISIBLE
+            profileBinding.btUpdate.isClickable = false
+            profileBinding.pbPrgressBarProfile.visibility = View.VISIBLE
 
 
-        //UUID
-        val imageName = intent.getStringExtra("imageName").toString()
 
-        val imageReference = storageReference.child("images").child(imageName)
-        imageUri?.let { uri ->
-            imageReference.putFile(uri).addOnSuccessListener {
+            Log.d("error", "imageName : $imageName")
+            Log.d("error", "imageUri : $imageUri")
+            Log.d("error", "userNameProfile : $userNameProfile")
 
-                Toast.makeText(applicationContext, "Image Updated", Toast.LENGTH_SHORT).show()
+            Picasso.get().load(imageUri)
+                .into(profileBinding.iBtnChooseImage)
 
-                //downloadable url
-                val myUploadedImageReference = storageReference.child("images").child(imageName)
-                myUploadedImageReference.downloadUrl.addOnSuccessListener { url ->
-                    val imageUrl = url.toString()
+            val imageReference = storageReference.child("images").child(imageName)
+            imageUri?.let { uri ->
+                imageReference.putFile(uri).addOnSuccessListener {
 
-                    //updateData(imageUrl,imageName)
+                    Toast.makeText(applicationContext, "Image Updated", Toast.LENGTH_SHORT).show()
 
+                    //downloadable url
+                    val myUploadedImageReference = storageReference.child("images").child(imageName)
+                    myUploadedImageReference.downloadUrl.addOnSuccessListener { url ->
+                        val imageUrl = url.toString()
+                        //TODD call update data function to update the image name and username and imageurl
+                        //updateData(imageUrl,imageName)
+
+                    }
                 }
-            }
 
-        }?.addOnFailureListener {
-            Toast.makeText(applicationContext, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }?.addOnFailureListener {
+                Toast.makeText(applicationContext, it.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
         }
+
 
     }
 
@@ -237,8 +247,8 @@ profileBinding.btDeleteProfile.setOnClickListener {
     private fun toolBarSetUp() {
         // helps to use our own action bar that is toolbar
         setSupportActionBar(profileBinding.toolBarProfileActivity)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         // this will lead us to the main screen as exercise activity is already finished
         profileBinding.toolBarProfileActivity.setNavigationOnClickListener {
             onBackPressedDispatcher.onBackPressed()

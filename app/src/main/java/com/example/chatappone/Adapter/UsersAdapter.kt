@@ -13,13 +13,14 @@ import com.squareup.picasso.Picasso
 
 class UsersAdapter(
     var context: Context,
-    var userList: ArrayList<UsersEntity>
+    var userList: ArrayList<UsersEntity>,
+    var userProfileImageUrl: String
 ) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     inner class ViewHolder(val adapterBinding: UserItemBinding) :
         RecyclerView.ViewHolder(adapterBinding.root) {
         val tvName = adapterBinding.tvName
-        val tvDescription = adapterBinding.tvDescription
+        val tvLatestMessage = adapterBinding.tvLatestMessage
         val ivImage = adapterBinding.ivPlaceUserImage
     }
 
@@ -43,6 +44,8 @@ class UsersAdapter(
         if (imageUrl.isNotEmpty())
             Picasso.get().load(imageUrl).into(holder.ivImage)
 
+        // fetching latest message
+
         holder.adapterBinding.cdCardViewItems.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("id", currentUser.userId)
@@ -51,6 +54,7 @@ class UsersAdapter(
 //            intent.putExtra("mail", allUsers.userEmail)
 //            intent.putExtra("phoneNumber", allUsers.userPhoneNumber)
               intent.putExtra("profileImageUrl",currentUser.profileImageUrl)
+              intent.putExtra("userImageUrl",userProfileImageUrl)
 //            intent.putExtra("imageName",allUsers.imageName)
 //
             context.startActivity(intent)

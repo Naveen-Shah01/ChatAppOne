@@ -42,6 +42,7 @@ class SignUpActivity : AppCompatActivity() {
     lateinit var galleryActivityResultLauncher: ActivityResultLauncher<Intent>
     private var imageUri: Uri? = null
     private var profileImageUrl: String = ""
+    private var imageName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,7 +191,7 @@ class SignUpActivity : AppCompatActivity() {
                     val userId: String = auth.currentUser?.uid!!
 
                     uploadImage(userId,userName,userEmail)
-
+//TODO handle case when weak internet causes only authentication but not added in database
                     Toast.makeText(
                         applicationContext,
                         "Your account created", Toast.LENGTH_SHORT,
@@ -210,8 +211,8 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private fun addUserToDatabase(userId: String, userName: String, userEmail: String, profileImageUrl: String) {
-        val user = UsersEntity(userId, userName, userEmail,profileImageUrl)
+    private fun addUserToDatabase(userId: String, userName: String, userEmail: String, profileImageUrl: String,imageName : String) {
+        val user = UsersEntity(userId, userName, userEmail,profileImageUrl,imageName)
         myReference.child(userId).setValue(user)
 
     }
@@ -219,11 +220,11 @@ class SignUpActivity : AppCompatActivity() {
     private fun uploadImage(userId: String, userName: String, userEmail: String) {
         if (imageUri == null) {
             Log.e("error", "File link: $profileImageUrl")
-            addUserToDatabase(userId, userName, userEmail,profileImageUrl)
+            addUserToDatabase(userId, userName, userEmail,profileImageUrl,imageName)
             return
         }
         //UUID
-        val imageName = UUID.randomUUID().toString()
+         imageName = UUID.randomUUID().toString()
         // var urlsend: String = ""
         val imageReference = storageReference.child("images").child(imageName)
 
@@ -232,7 +233,7 @@ class SignUpActivity : AppCompatActivity() {
             imageReference.downloadUrl.addOnSuccessListener { uri ->
                 profileImageUrl = uri.toString()
                 Log.d("error", "File link: $profileImageUrl")
-                addUserToDatabase(userId, userName, userEmail,profileImageUrl)
+                addUserToDatabase(userId, userName, userEmail,profileImageUrl,imageName)
             }
         }
 

@@ -59,11 +59,12 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/google_sans_regular"
                     android:text="Status"
+
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="normal"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     tools:visibility="visible" />
 
 
@@ -85,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/vSeparatorChat"
-        android:background="@color/black">
+        android:background="@color/color_primary">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvChatRecyclerView"

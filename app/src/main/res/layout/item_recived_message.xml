@@ -9,8 +9,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:id="@+id/ivFriendImageChat"
+            android:layout_marginTop="8dp"
+            android:id="@+id/ivFriendImageItem"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:contentDescription="Profile Image of Friend"
@@ -18,11 +18,12 @@
             android:scaleType="centerCrop"
             android:src="@drawable/avatar"
             app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-            app:strokeColor="@color/black"
+            app:strokeColor="@color/white"
             android:layout_alignParentEnd="true"
             app:strokeWidth="1dp" />
+
         <TextView
-            android:id="@+id/tvReceivedMessage"
+            android:id="@+id/tvReceiverMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="This is Receivers message"
@@ -30,9 +31,14 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             android:maxWidth="260dp"
-            app:layout_constraintStart_toEndOf="@id/ivFriendImageChat"
-            app:layout_constraintTop_toTopOf="@id/ivFriendImageChat"
+            app:layout_goneMarginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/ivFriendImageItem"
+            app:layout_constraintTop_toTopOf="@id/ivFriendImageItem"
             android:layout_marginStart="8dp"
             android:padding="12dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

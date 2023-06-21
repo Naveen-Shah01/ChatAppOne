@@ -1,8 +1,6 @@
-package com.example.chatappone
+//package com.example.chatappone
 //
-//import android.Manifest
 //import android.content.Intent
-//import android.content.pm.PackageManager
 //import android.net.Uri
 //import androidx.appcompat.app.AppCompatActivity
 //import android.os.Bundle
@@ -12,18 +10,15 @@ package com.example.chatappone
 //import androidx.activity.result.ActivityResultCallback
 //import androidx.activity.result.ActivityResultLauncher
 //import androidx.activity.result.contract.ActivityResultContracts
-//import androidx.core.app.ActivityCompat
-//import androidx.core.content.ContextCompat
 //import com.example.fbone.databinding.ActivityUpdateUserBinding
 //import com.google.firebase.database.DatabaseReference
 //import com.google.firebase.database.FirebaseDatabase
 //import com.google.firebase.storage.FirebaseStorage
 //import com.google.firebase.storage.StorageReference
 //import com.squareup.picasso.Picasso
-//import java.util.UUID
 //
 //class UpdateUserActivity : AppCompatActivity() {
-//    lateinit var updateUserBinding: Ac
+//    lateinit var updateUserBinding: ActivityUpdateUserBinding
 //
 //    val database: FirebaseDatabase = FirebaseDatabase.getInstance()
 //    val Myreference: DatabaseReference = database.reference.child("NewUsers")
