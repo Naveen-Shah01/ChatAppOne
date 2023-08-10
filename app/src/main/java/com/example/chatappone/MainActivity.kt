@@ -8,9 +8,6 @@ import com.example.chatappone.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    // TODO implement logout feature
-    // TODO change all authentication process from activities to one fragment
-    // TODO add feature to chat with chatgpt
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
