@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
         loginBinding.btSgnGoogle.setOnClickListener {
-            // TODO fix the google sign in when user deleted association
+           
             signInWithGoogle()
         }
         loginBinding.tvSignUp.setOnClickListener {
@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
          val authCredential = GoogleAuthProvider.getCredential(googleAccount.idToken,null)
         auth.signInWithCredential(authCredential).addOnCompleteListener { task->
             if(task.isSuccessful){
-                // here we can access users data
+              
             }
             else {
 
@@ -106,7 +106,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signInWithGoogle() {
-        // search more about webclient id from google
+       
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken("722312502463-5l9b7485ri89fl950ldvh6au295bb3rs.apps.googleusercontent.com")
             .requestEmail().build()
@@ -162,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
                     finish()
 
                 } else {
-                    //TODO handle the progressbar and button if login fails
+                   
                     Toast.makeText(
                         applicationContext,
                         task.exception?.localizedMessage,Toast.LENGTH_SHORT,
