@@ -24,8 +24,7 @@ import java.util.Objects
 
 class ChatActivity : AppCompatActivity() {
 
-    //TODO handle the case when user start typing whole view doesn't lift upwards\
-    // add the feature of status of writing of sender to receiver
+ 
     private lateinit var chatBinding: ActivityChatBinding
 
 
@@ -66,26 +65,6 @@ class ChatActivity : AppCompatActivity() {
         senderUserId = FirebaseAuth.getInstance().currentUser?.uid
 
 
-        // for the status of the sender to receiver
-//        myReference.child("Presence").child(receiverUserId!!).addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                if(snapshot.exists()) {
-//                    val status = snapshot.getValue(String::class.java)
-//                    if (status == "offline") {
-//                        chatBinding.tvFriendStatusChat.visibility = View.GONE
-//                    } else {
-//                        chatBinding.tvFriendStatusChat.text = status
-//                        chatBinding.tvFriendStatusChat.visibility = View.VISIBLE
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
 
 
 //       senderRoom = receiverUserId + senderUserId
@@ -127,37 +106,9 @@ class ChatActivity : AppCompatActivity() {
         }
 
 
-//        val handler = Handler()
-//        chatBinding.etMessageBox.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun afterTextChanged(s: Editable?) {
-//                myReference.child("Presence").child(senderUserId!!).setValue("Typing...")
-//                handler.removeCallbacksAndMessages(null)
-//                handler.postDelayed(userStoppedTyping, 1000)
-//            }
-//
-//            var userStoppedTyping =
-//                Runnable { myReference.child("Presence").child(senderUserId!!).setValue("Online") }
-//        })
+
     }
 
-//    override fun onPause() {
-//        super.onPause()
-//        myReference.child("Presence").child(senderUserId!!).setValue("offline")
-//    }
-
-//    override fun onResume() {
-//        super.onResume()
-//        myReference.child("Presence").child(senderUserId!!).setValue("Online")
-//    }
-        //     Log.d("error","message : ${myReference.key}")
         private fun toolbarSetup() {
             // helps to use our own action bar that is toolbar
             setSupportActionBar(chatBinding.toolBarChatActivity)
