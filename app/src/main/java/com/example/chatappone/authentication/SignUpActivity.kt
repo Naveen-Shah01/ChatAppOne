@@ -107,7 +107,7 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun chooseImageFromGallery() {
 
-        // TODO handle the event when user denies the permission
+
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_EXTERNAL_STORAGE
@@ -170,7 +170,7 @@ class SignUpActivity : AppCompatActivity() {
             signUpBinding.etNameSignUp.error = "Name cannot be empty"
             valid = false
         }
-// TODO check if password is more than or equal to 8 character long
+
         if (TextUtils.isEmpty(signUpPassword)) {
             signUpBinding.etPasswordSignUp.error = "Password cannot be empty"
             valid = false
@@ -181,7 +181,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
     private fun signUpWithFireBase(userEmail: String, userPassword: String, userName: String) {
-        // TODO add name section in authentication that is add name as well
+       
         signUpBinding.pbProgressSignup.visibility = View.VISIBLE
         signUpBinding.btSignUp.isClickable = false
         auth.createUserWithEmailAndPassword(userEmail, userPassword)
@@ -191,7 +191,7 @@ class SignUpActivity : AppCompatActivity() {
                     val userId: String = auth.currentUser?.uid!!
 
                     uploadImage(userId,userName,userEmail)
-//TODO handle case when weak internet causes only authentication but not added in database
+
                     Toast.makeText(
                         applicationContext,
                         "Your account created", Toast.LENGTH_SHORT,
@@ -199,7 +199,7 @@ class SignUpActivity : AppCompatActivity() {
                     finish()
 
                 } else {
-                    //TODO handle the progressbar and button if authentication fails
+                 
                     Toast.makeText(
                         applicationContext,
                         task.exception?.localizedMessage, Toast.LENGTH_SHORT,
@@ -241,9 +241,6 @@ class SignUpActivity : AppCompatActivity() {
     }
 
 
-//    private fun addUserToDatabase(userId: String, userMap: MutableMap<String, String>) {
-//        myReference.child(userId).setValue(userMap)
-//    }
 
 
 }
