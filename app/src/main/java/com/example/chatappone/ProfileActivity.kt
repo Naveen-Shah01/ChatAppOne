@@ -35,8 +35,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var galleryActivityResultLauncher: ActivityResultLauncher<Intent>
 
-    //TODO edit name,profile in this activity
-    // TODO add delete account functionality
+   
     private lateinit var profileBinding: ActivityProfileBinding
 
     private var imageUri: Uri? = null
@@ -61,7 +60,7 @@ class ProfileActivity : AppCompatActivity() {
 
 
         profileBinding.iBtnChooseImage.setOnClickListener {
-            //TODO ask gallery permission
+            //ask gallery permission
             chooseImageFromGallery()
         }
 
@@ -99,7 +98,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun startLoginActivity() {
-        // TODO direct goto start activity and destroy all previous one
+        // direct goto start activity and destroy all previous one
 
         val intent = Intent(this, LoginActivity::class.java)
 // set the new task and clear flags
@@ -139,10 +138,10 @@ class ProfileActivity : AppCompatActivity() {
             return
         }
         if (userNameProfile.isNotEmpty() && imageUri == null) {
-            // TODO update user Name
+            //  update user Name
         }
         if (imageUri != null && userNameProfile.isNotEmpty()) {
-            // TODO update username and image
+            // update username and image
             profileBinding.btUpdate.isClickable = false
             profileBinding.pbPrgressBarProfile.visibility = View.VISIBLE
 
@@ -165,8 +164,7 @@ class ProfileActivity : AppCompatActivity() {
                     val myUploadedImageReference = storageReference.child("images").child(imageName)
                     myUploadedImageReference.downloadUrl.addOnSuccessListener { url ->
                         val imageUrl = url.toString()
-                        //TODD call update data function to update the image name and username and imageurl
-                        //updateData(imageUrl,imageName)
+                        
 
                     }
                 }
