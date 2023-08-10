@@ -22,11 +22,7 @@ import com.squareup.picasso.Picasso
 
 class ChatUsersActivity : AppCompatActivity() {
 
-    //TODO Image Changes from profile activity are not reflecting
-
-    //TODO add a loader of refresh button to load the profile changes that have been done in profile activity
-
-    //TODO create a latest message feature
+  
     private lateinit var chatUsersBinding: ActivityChatUsersBinding
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -48,7 +44,7 @@ class ChatUsersActivity : AppCompatActivity() {
         retrieveDataFromFirebaseDatabase()
 
         chatUsersBinding.iBtnLogout.setOnClickListener {
-            //TODO Finish all previous activities when logout
+        
             showAlertDialogLogOut()
 
         }
@@ -152,7 +148,7 @@ class ChatUsersActivity : AppCompatActivity() {
 
     /** when logout it will move to login activity */
     private fun startLoginActivity() {
-        // TODO direct goto start activity and destroy all previous one
+        // direct goto start activity and destroy all previous one
 
         val intent = Intent(this, LoginActivity::class.java)
     // set the new task and clear flags
